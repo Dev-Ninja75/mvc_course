@@ -5,10 +5,13 @@ const server = http.createServer(app);
 const port = 3000;
 const expressHbs = require("express-handlebars");
 const path = require("path");
+const usersRoutes = require("./router/users");
 
 // Middleware express.json => Déchiffre le body
 app.use(express.json());
+app.use(express.urlencoded({ extented: false }));
 
+// Configuration du moteur de views
 app.engine(
   "hbs",
   expressHbs({
@@ -20,6 +23,8 @@ app.engine(
 
 app.set("view engine", "hbs");
 app.set("views", "views");
+
+app.use("/users", usersRoutes);
 
 server.listen(port, () => {
   console.log(`NodeJS server started ${port}`);
